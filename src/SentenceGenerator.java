@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Random;
 
 public class SentenceGenerator {
 
@@ -32,21 +33,34 @@ public class SentenceGenerator {
         //noun verb noun noun
         String format = "The %s %s the %s with a(n) %s.";
         int attempts = 0;
-        while(attempts < 50) {
+        while(attempts < 5) {
             ArrayList<String> sentenceNouns = new ArrayList<>();
             String verb = "";
             int nouns = 0;
-            while(nouns < 3) {
-                if(!nounIt.hasNext())
-                    nounIt = this.nouns.iterator();
+            while(nounIt.hasNext())
                 sentenceNouns.add(nounIt.next());
-                nouns++;
+            ArrayList<String> chosenNouns = new ArrayList<>();
+            int amount = sentenceNouns.size();
+            Random rand = new Random();
+            int att = 0;
+            while(nouns < 3 && att < 50) {
+                try {
+                    System.out.println("Trying bound " + amount);
+                    int randomNumber = rand.nextInt(amount);
+                    if(!chosenNouns.contains(sentenceNouns.get(randomNumber))) {
+                        chosenNouns.add(sentenceNouns.get(randomNumber));
+                        nouns++;
+                    }
+                } catch (Exception e) {
+                    att++;
+                }
             }
-            if (!verbIt.hasNext()) {
-                verbIt = verbs.iterator();
+            ArrayList<String> chosenVerbs = new ArrayList<>();
+            while(verbIt.hasNext()) {
+                chosenVerbs.add(verbIt.next());
             }
-            verb = verbIt.next();
-            String sentence = String.format(format, sentenceNouns.get(0), verb, sentenceNouns.get(1), sentenceNouns.get(2));
+            verb = chosenVerbs.get(new Random().nextInt(chosenVerbs.size()));
+            String sentence = String.format(format, chosenNouns.get(0), verb, chosenNouns.get(1), chosenNouns.get(2));
             if(!sentences.contains(sentence)) {
                 sentences.add(sentence);
                 return;

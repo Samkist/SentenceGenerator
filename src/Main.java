@@ -16,7 +16,53 @@ public class Main extends GBFrame {
 
 
     public Main() {
+        test();
+        //Thread thread = new Thread(new MyRunnable(sentenceGenerator, this));
+       //thread.start();
         updateList();
+    }
+    public class MyRunnable implements Runnable {
+
+        private SentenceGenerator generator;
+        private Main m;
+
+        public MyRunnable(SentenceGenerator generator, Main m) {
+            this.generator = generator;
+            this.m = m;
+        }
+
+        public void run() {
+            try {
+                try {
+                    Thread.sleep(100);
+                } catch (Exception e) {
+                    return;
+                }
+                while (true) {
+                    generator.generate();
+                }
+            } catch (Exception e) {
+                m.messageBox("Done");
+                return;
+            }
+        }
+    }
+
+    public void test() {
+        sentenceGenerator.addNoun("cat");
+        sentenceGenerator.addNoun("dog");
+        sentenceGenerator.addNoun("cow");
+        sentenceGenerator.addNoun("bat");
+        sentenceGenerator.addNoun("desk");
+        sentenceGenerator.addNoun("chair");
+        sentenceGenerator.addNoun("pencil");
+        sentenceGenerator.addNoun("book");
+        sentenceGenerator.addVerb("hit");
+        sentenceGenerator.addVerb("clapped");
+        sentenceGenerator.addVerb("ran");
+        sentenceGenerator.addVerb("watched");
+        sentenceGenerator.addVerb("reamed");
+        sentenceGenerator.addVerb("eviscerated");
     }
 
     public static void main(String[] args) {
