@@ -45,7 +45,6 @@ public class SentenceGenerator {
             int att = 0;
             while(nouns < 3 && att < 50) {
                 try {
-                    System.out.println("Trying bound " + amount);
                     int randomNumber = rand.nextInt(amount);
                     if(!chosenNouns.contains(sentenceNouns.get(randomNumber))) {
                         chosenNouns.add(sentenceNouns.get(randomNumber));
